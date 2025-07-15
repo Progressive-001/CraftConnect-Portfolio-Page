@@ -41,7 +41,7 @@
 // --- All other DOM logic runs once on page load ---
 document.addEventListener('DOMContentLoaded', () => {
 
-  clickMe();
+  // clickMe();
 
   const sideBar = document.querySelector('.sidebar');
   const iconSideBar = document.querySelector('.icon-sidebar');
