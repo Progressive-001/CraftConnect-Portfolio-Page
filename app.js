@@ -1,3 +1,4 @@
+  // import { clickMe } from './Add-New-PR/utility.js';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -7,6 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const date = document.querySelector('.date');
   const threeDot = document.querySelectorAll('.three-dot');
   const displayPopup = document.querySelectorAll('.display-popup');
+  const form = document.querySelector('form');
+  const input = document.querySelector('.input-projectTitle');
 
 
 
@@ -93,6 +96,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
     })
   })
+
+
+  const title = localStorage.getItem('projectTitle');
+  const image = localStorage.getItem('projectImage');
+
+
+  // console.log(`Project: ${title}, Image: ${image}`);
+
+  const printNewPro = () => {
+    const cards = document.querySelector('.cards')
+    const html = `
+      <div class="card">
+        <div class="info">
+          <img class="image-sample" src="${image}" alt="Priya Sharma" loading="eager"/>
+        </div>
+        <div class="group">
+          <div class="card-text">
+            <h2>${title}</h2>
+            <p>Fashion & Tailoring</p>
+          </div>
+          <div class="three-container">
+            <button class="three-dot"><i class="dot fas fa-ellipsis-vertical"></i></button>
+          </div>
+          <div class="display-popup"></div>
+        </div>
+        
+      </div>
+    
+    `
+    cards.innerHTML += html
+  }
+  
+  // printNewPro()
+  // printNewPro()
+  // printNewPro()
+ 
   
 })
 

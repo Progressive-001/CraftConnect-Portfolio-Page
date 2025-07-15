@@ -1,5 +1,47 @@
+//  export New Project to portfolio page
+// export function clickMe() {
+  
+//   const form = document.querySelector('form');
+//   const input = document.querySelector('.input-projectTitle');
 
+//   if (!form || !input) {
+//     return console.warn('Form or input not found');
+//   }
+
+//   form.addEventListener('submit', (e) => {
+//     e.preventDefault();
+
+//     const fileInput = document.querySelector('#fileInput');
+//     const file = fileInput && fileInput.files ? fileInput.files[0] : null;
+//     const value = input.value.trim();
+
+//     if (!value) {
+//       alert('Please enter a project title');
+//       return;
+//     }
+
+//     // Save project title
+//     localStorage.setItem('projectTitle', value);
+
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onload = function(e) {
+//         const base64Image = e.target.result;
+//         localStorage.setItem('projectImage', base64Image); // Save base64
+//         window.location.href = '../index.html'; 
+//       };
+//       reader.readAsDataURL(file); // Convert to base64
+//     } else {
+//       localStorage.removeItem('projectImage'); // Optionally clear image if none selected
+//       window.location.href = '../index.html'; 
+//     }
+//   });
+// }
+
+// --- All other DOM logic runs once on page load ---
 document.addEventListener('DOMContentLoaded', () => {
+
+  clickMe();
 
   const sideBar = document.querySelector('.sidebar');
   const iconSideBar = document.querySelector('.icon-sidebar');
@@ -7,16 +49,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const date = document.querySelector('.date');
   const displayPopup = document.querySelectorAll('.display-popup');
   const loadingFill = document.querySelector('#loadingFill');
-  const loadingBar = document.querySelector('.loading-bar')
+  const loadingBar = document.querySelector('.loading-bar');
   const toggle = document.querySelector("#customToggle");
   const browserBtn = document.querySelector('#browserBtn');
   const fileInput = document.querySelector('#fileInput');
   const uploadedFileContainer = document.querySelector('.uploaded');
-  const grouped1 = document.querySelector('.grouped-1')
+  const grouped1 = document.querySelector('.grouped-1');
   const uploadingFileContainer = document.querySelector('.uploading');
-
-
-
 
   function toggleSidebar() { 
     if (sideBar.classList.contains('hidden')) {
@@ -30,146 +69,98 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       iconSideBar.classList.add('hidden');
     }
-
   }
 
   logoIcon.forEach(logo => { 
-          logo.addEventListener('click', toggleSidebar);
+    logo.addEventListener('click', toggleSidebar);
   });
 
   // date logic
-  const today = new Date()
-
-  const day = today.getDate()
+  const today = new Date();
+  const day = today.getDate();
   const month = today.toLocaleDateString('en-US', {month: 'short'});
-  const year = today.getFullYear()
+  const year = today.getFullYear();
+  date.innerHTML = `${day}, ${month} ${year}`;
 
-  // console.log(day, month, year)
-
-  date.innerHTML = `${day}, ${month} ${year}`
-
-
-   // delete uploaded file
-
+  // delete uploaded file
   uploadedFileContainer.addEventListener('click', (e) => {
-
     if (e.target.closest('.delete-img')){
-
       const uploadedFileContainer = e.target.closest('.group-uploadedContent');
-
       uploadedFileContainer.remove();
-
-    }else{console.log('Error')}
-
-  })
-
-    // delete uploaded file
+    } else {
+      console.log('Error');
+    }
+  });
 
   grouped1.addEventListener('click', (e) => {
-
     if (e.target.closest('.fa-circle-xmark')){
-
       const uploadedFileContainer = e.target.closest('.group-uploadedContent');
-
       uploadedFileContainer.innerHTML = " ";
-
-    }else{console.log('Error')}
-
-  })
-
-
- 
+    } else {
+      console.log('Error');
+    }
+  });
 
   toggle.addEventListener("click", () => {
-
     toggle.classList.toggle("active");
-
     const isOn = toggle.classList.contains("active");
     console.log(isOn ? "ON" : "OFF");
   });
 
-
   browserBtn.addEventListener('click', () => {
-    fileInput.click()
-  })
+    fileInput.click();
+  });
 
   fileInput.addEventListener('change', () => {
-
     const files = fileInput.files[0];
+    if (!files) return;
 
- 
+    console.log(files.name);
 
-    console.log(files.name)
-    
+    uploadingFile();
 
-    uploadingFile()
-
-    loadingFill.style.transition = 'none'
-    loadingFill.style.width = '0%'; // Fills in 3 seconds
+    loadingFill.style.transition = 'none';
+    loadingFill.style.width = '0%';
 
     const fileSizeMb = files.size / (1024 * 1024); 
-    const duration = Math.min(fileSizeMb, 5)
-    grouped1.style.visibility = 'visible'
-  
+    const duration = Math.min(fileSizeMb, 5);
+    grouped1.style.visibility = 'visible';
+
     setTimeout(() => {
-      loadingFill.style.transition = `width ${duration}s ease`
-      loadingFill.style.width = '100%'
-      loadingBar.style.visibility = 'visible'
-     
+      loadingFill.style.transition = `width ${duration}s ease`;
+      loadingFill.style.width = '100%';
+      loadingBar.style.visibility = 'visible';
     }, 50);
 
-
     setTimeout(() => {
-
-      uploadedFile()
-
-      uploadedFileContainer.style.visibility = 'visible'
-
-    }, duration * 1000 + 100)
-  
-  })
-
+      uploadedFile();
+      uploadedFileContainer.style.visibility = 'visible';
+    }, duration * 1000 + 100);
+  });
 
   const uploadingFile = () => {
-
-    const files = fileInput.files[0];
-    const name = files.name
-
     for (let i = 0; i < fileInput.files.length; i++) {
-    const file = fileInput.files[i];
-
+      const file = fileInput.files[i];
       const uploadingHtmlTemplate = `
         <div class="group-uploadedContent">
           <li class="uploading-file">${file.name}</li>
           <i class="far fa-circle-xmark"></i>
         </div>
-      `
+      `;
       uploadingFileContainer.innerHTML = uploadingHtmlTemplate;
     }
-  }
-  
+  };
 
   const uploadedFile = () => {
-    const files = fileInput.files[0];
-    const name = files.name
-
     for (let i = 0; i < fileInput.files.length; i++) {
-    const file = fileInput.files[i];
-    // uploadedFileContainer.innerHTML =  file.name;
-       
-
+      const file = fileInput.files[i];
       const uploadedHtmlTemplate = `
         <div class="group-uploadedContent">
           <li class="uploaded-file">${file.name}</li>
           <img class="delete-img" src="../asset/Delete-icon.svg" alt="">
         </div>
-      `
+      `;
       uploadedFileContainer.innerHTML += uploadedHtmlTemplate;
     }
-  }
- 
-})
-
-
-
-
+  };
+});

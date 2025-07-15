@@ -78,7 +78,8 @@ body {
 }
 
 .logo-icon {
-	/* margin-left: auto; */
+	margin-left: 10px;
+	margin-right: auto;
 	cursor: pointer;
 	color: #7c3aed;
 	font-size: 1.5rem;
@@ -236,6 +237,10 @@ i.add{
 	justify-content: center;
 }
 
+.add-project a{
+	text-decoration: none;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -346,6 +351,8 @@ i.fa-search{
 .header-content p{
   color: #8D8E90;
   font-size: 0.8rem;
+  /* width: 100%;
+  max-width: 300px; */
 }
 
 .display-popup{
@@ -408,38 +415,33 @@ span.delete-content{
 }
 
 
+
 /* Responsive */
 @media (max-width: 768px) {
 	.sidebar {
-		width: 250px;
+		width: 100%;
 		z-index: 1000;
 	}
-
- /* .logo-text {
-		display: none;
-	}
-
-	.nav-item span {
-		display: none;
-	} */
 
 	.card {
 		grid-template-columns: 1fr;
 	}
 
-	.filters {
-		flex-wrap: wrap;
-	}
+  .circle{
+    display: none;
+  }
+
 
 	.header-right i {
 		display: none;
 	}
+}
 
-	.header-right i,
-	.date {
-		display: none;
+@media (max-width: 530px) {
+	.sidebar {
+		width: 100%;
+		z-index: 1000;
 	}
-
 }
 
 @media (max-width: 350px) {
